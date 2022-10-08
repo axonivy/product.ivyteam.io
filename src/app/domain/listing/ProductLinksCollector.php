@@ -13,6 +13,7 @@ class ProductLinksCollector {
 
   public function __construct(array $buildJobUrls)
   {
+    libxml_use_internal_errors(true);
     $this->buildJobUrls = $buildJobUrls;
   }
   
@@ -43,7 +44,6 @@ class ProductLinksCollector {
   }
   
   public static function parse(DOMDocument $dom, String $baseUrl): array {
-    libxml_use_internal_errors(true);
     $productLinks = [];
     $child_elements = $dom->getElementsByTagName('a');
     foreach ($child_elements as $child) {

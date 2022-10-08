@@ -11,6 +11,7 @@ class BuildJobUrlCrawler
 
   public function __construct(array $productBuildUrls)
   {
+    libxml_use_internal_errors(true);
     $this->productBuildUrls = $productBuildUrls;
   }
   
@@ -35,7 +36,6 @@ class BuildJobUrlCrawler
   }
   
   public static function parse(DOMDocument $dom, String $baseUrl): array {
-    libxml_use_internal_errors(true);
     $urls = [];
     $child_elements = $dom->getElementsByTagName('a');
     foreach ($child_elements as $child) {
