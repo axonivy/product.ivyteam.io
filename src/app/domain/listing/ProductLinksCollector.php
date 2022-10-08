@@ -2,44 +2,55 @@
 namespace app\domain\listing;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Promise;
 use DOMDocument;
 use app\domain\listing\model\Group;
 use app\domain\listing\model\ProductLink;
 
 class ProductLinksCollector {
 
-  private String $buildJobUrl;
+  private array $buildJobUrls;
 
-  public function __construct(String $buildJobUrl)
+  public function __construct(array $buildJobUrls)
   {
-    libxml_use_internal_errors(true);
-    $this->buildJobUrl = $buildJobUrl;
+    $this->buildJobUrls = $buildJobUrls;
   }
-
-  public function get(): ?Group
+  
+  public function get(): array
   {
     $client = new Client();
-    $response = $client->get($this->buildJobUrl, ['http_errors' => false]);
-    if ($response->getStatusCode() == 404) {
-      return null;
-    }
-    $content = $response->getBody();
-    $dom = new DOMDocument();
-    $dom->loadHTML($content);
     
-    $productLinks = $this->parse($dom);
-    $name = $this->name();
-    return new Group($name, $this->buildJobUrl, $productLinks);
+    $promises = [];
+    foreach ($this->buildJobUrls as $buildJobUrl) {
+      $promises[$buildJobUrl] = $client->getAsync($buildJobUrl, ['http_errors' => false]);
+    }
+    
+    $responses = Promise\Utils::unwrap($promises);
+    
+    $groups =[];
+    foreach ($responses as $url => $response) {
+      if ($response->getStatusCode() == 404) {
+        continue;
+      }
+      $content = $response->getBody();
+      $dom = new DOMDocument();
+      $dom->loadHTML($content);
+      $productLinks = self::parse($dom, $url);
+      $name = self::name($url);
+      $groups[] = new Group($name, $url, $productLinks);
+    }
+    return $groups;
   }
-
-  public function parse(DOMDocument $dom): array {
+  
+  public static function parse(DOMDocument $dom, String $baseUrl): array {
+    libxml_use_internal_errors(true);
     $productLinks = [];
     $child_elements = $dom->getElementsByTagName('a');
     foreach ($child_elements as $child) {
       $href = $child->getAttribute('href');
       if (str_contains($href, "AxonIvy") && str_ends_with($href, '.zip') && !str_contains($href, "Repository")) {
         $text = basename($href);
-        $url = $this->buildJobUrl . $href;
+        $url = $baseUrl . $href;
         $link = new ProductLink($text, $url);
         $productLinks[] = $link;
       }
@@ -47,7 +58,7 @@ class ProductLinksCollector {
     return $productLinks;
   }
 
-  public function name(): String {
-    return basename(dirname(str_replace("%252F", "/", $this->buildJobUrl)));
+  public static function name($url): String {
+    return basename(dirname(str_replace("%252F", "/", $url)));
   }
 }
