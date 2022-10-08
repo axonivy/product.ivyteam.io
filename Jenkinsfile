@@ -34,6 +34,9 @@ pipeline {
     }
 
     stage('deploy') {
+      when {
+        branch 'master' 
+      }
       steps {
         script {
           def image = docker.build("engine-listing-service:latest", "-f docker/prod/Dockerfile .")
