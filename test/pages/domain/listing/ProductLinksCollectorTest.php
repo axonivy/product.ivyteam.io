@@ -9,13 +9,12 @@ class ProductLinksCollectorTest extends TestCase
 {
 
   public function testParse()
-  {
-    $crawler = new ProductLinksCollector("https://anyurl/");
-    
+  { 
+    libxml_use_internal_errors(true);
     $dom = new DOMDocument();
     $dom->loadHTMLFile(dirname(__FILE__) . "/build-job.html");
 
-    $urls = $crawler->parse($dom);
+    $urls = ProductLinksCollector::parse($dom, "https://anyurl/");
     $this->assertEquals(5, sizeof($urls));
     $this->assertEquals("AxonIvyDesigner10.0.0.2210080034_Linux_x64.zip", $urls[0]->getText());
     $this->assertEquals("https://anyurl/lastSuccessfulBuild/artifact/workspace/ch.ivyteam.ivy.designer.product/target/products/AxonIvyDesigner10.0.0.2210080034_Linux_x64.zip", $urls[0]->getUrl());
@@ -35,16 +34,13 @@ class ProductLinksCollectorTest extends TestCase
 
   public function testName()
   {
-    $crawler = new ProductLinksCollector("https://anyurl/job/master/lastSuccessfulBuild/");
-    $this->assertEquals("master", $crawler->name());
-
-    $crawler = new ProductLinksCollector("https://anyurl/job/release%252F8.0/lastSuccessfulBuild/");
-    $this->assertEquals("8.0", $crawler->name());
+    $this->assertEquals("master", ProductLinksCollector::name("https://anyurl/job/master/lastSuccessfulBuild/"));
+    $this->assertEquals("8.0", ProductLinksCollector::name("https://anyurl/job/release%252F8.0/lastSuccessfulBuild/"));
   }
 
   public function testNonExistingBuildJobUrl()
   {
-    $crawler = new ProductLinksCollector("https://jenkins.ivyteam.io/any-non-existing-url");
-    $this->assertNull($crawler->get());
+    $crawler = new ProductLinksCollector(["https://jenkins.ivyteam.io/any-non-existing-url"]);
+    $this->assertEmpty($crawler->get());
   }
 }
