@@ -3,7 +3,6 @@
 namespace app;
 
 use DI\Container;
-use Middlewares\TrailingSlash;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Factory\AppFactory;
@@ -22,7 +21,6 @@ class Website
   {
     $container = $this->createDiContainer();
     $this->app = AppFactory::createFromContainer($container);
-    $this->installTrailingSlashRedirect();
     $this->installRoutes();
     $this->installErrorHandling();
   }
@@ -44,11 +42,6 @@ class Website
   public function start()
   {
     $this->app->run();
-  }
-
-  private function installTrailingSlashRedirect()
-  {
-    $this->app->add((new TrailingSlash(false))->redirect());
   }
 
   private function installRoutes()
