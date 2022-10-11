@@ -4,7 +4,6 @@
     "slim/twig-view": "^3.2",
     "slim/psr7": "^1.5",
     "php-di/php-di": "^6.3",
-    "middlewares/trailing-slash": "^2.0",
     "guzzlehttp/guzzle": "^7.0"
   },
   "require-dev": {
