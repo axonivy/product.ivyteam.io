@@ -21,6 +21,11 @@ class HomeAction
   public function __invoke($request, $response, $args)
   {
     $groups = (new Crawler())->get(self::PRODUCT_URLS);
+
+    foreach ($groups as $group) {
+      rsort($groups);
+    }
+
     return $this->view->render($response, 'home/home.twig', [
       'groups' => $groups
     ]);
