@@ -16,6 +16,6 @@ class HomeActionTest extends TestCase
       ->bodyContains("AxonIvyEngine")
       ->bodyContains("AxonIvyDesigner")
       ->bodyContains("zip")
-      ->bodyContains("This service is provided by one of your teammates");
+      ->bodyContains("This service is provided by two of your teammates");
   }
 }
