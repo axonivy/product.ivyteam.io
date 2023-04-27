@@ -12,9 +12,8 @@ class GroupSorter {
         return 1;
       } else if ($a->getText() == self::MASTER) {
         return -1;
-      } else {
-        return version_compare($b->getText(), $a->getText());
       }
+      return version_compare($b->getText(), $a->getText());
     });
     return $groups;
   }

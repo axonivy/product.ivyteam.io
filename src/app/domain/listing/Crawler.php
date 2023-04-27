@@ -7,7 +7,7 @@ class Crawler {
   {
     $buildJobUrls = (new BuildJobUrlCrawler($productBuildUrls))->crawl();
     $groups = (new ProductLinksCollector($buildJobUrls))->get();
-    GroupSorter::sort($groups);
+    $groups = GroupSorter::sort($groups);
     return $groups;
   }
 }
