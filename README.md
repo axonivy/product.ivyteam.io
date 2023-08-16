@@ -8,7 +8,7 @@ Service which grabs and displays the current Axon Ivy Engines builds from differ
   
 Run `./dev.sh` to start the website in docker
   
-... and later `docker-compose down` to stop the containers.
+... and later `docker compose down` to stop the containers.
 
 ## Execute tests
 
@@ -23,10 +23,10 @@ Tests can be executed when the dev environment is running by running `./test.sh`
 
 ```
 // Show outdated dependencies
-docker-compose exec web composer show --outdated
+docker compose exec web composer show --outdated
 
 // Upgrade dependencies
-docker-compose exec web composer update --prefer-dist -a --with-all-dependencies
+docker compose exec web composer update --prefer-dist -a --with-all-dependencies
 ```
 
 ## Resources
