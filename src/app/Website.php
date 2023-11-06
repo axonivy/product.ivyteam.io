@@ -46,7 +46,7 @@ class Website
 
   private function installRoutes()
   {
-    $this->app->get('/', HomeACtion::class);
+    $this->app->get('/', HomeAction::class);
   }
 
   private function installErrorHandling()
