@@ -11,12 +11,12 @@ class GroupSorterTest extends TestCase
   public function testSort()
   {
     $groups = [
-        new Group("7.0", "", []),
-        new Group("8.0", "", []),
-        new Group("11.2", "", []),
-        new Group("master", "", []),
-        new Group("11.1", "", []),
-        new Group("10.0", "", []),
+        new Group("7.0", "release/7.0", "", []),
+        new Group("8.0", "release/8.0", "", []),
+        new Group("11.2", "release/11.2", "", []),
+        new Group("master", "master", "", []),
+        new Group("11.1", "release/11.1", "", []),
+        new Group("10.0", "release/10.", "", []),
     ];
     shuffle($groups);
     

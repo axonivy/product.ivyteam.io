@@ -38,7 +38,8 @@ class ProductLinksCollector {
       $dom->loadHTML($content);
       $productLinks = self::parse($dom, $url);
       $name = self::name($url);
-      $groups[] = new Group($name, $url, $productLinks);
+      $branchName = self::branchName($url);
+      $groups[] = new Group($name, $branchName, $url, $productLinks);
     }
     return $groups;
   }
@@ -60,5 +61,11 @@ class ProductLinksCollector {
 
   public static function name($url): String {
     return basename(dirname(str_replace("%252F", "/", $url)));
+  }
+
+  public static function branchName($url): String {
+    $url = str_replace("%252F", "/", $url);
+    $url = substr($url, strrpos($url, 'job/') + 4);
+    return dirname($url);
   }
 }
