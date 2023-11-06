@@ -46,6 +46,6 @@ class PermalinkAction
         }
       }
     }
-    throw new HttpNotFoundException($request, 'could not find a product with the gien query params');
+    throw new HttpNotFoundException($request, 'could not find a product with the given query params');
   }
 }

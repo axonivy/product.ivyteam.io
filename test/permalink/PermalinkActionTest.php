@@ -29,5 +29,8 @@ class PermalinkActionTest extends TestCase
     AppTester::assertThatGet('/permalink?branch=master&product=engine')
       ->statusCode(404)
       ->bodyContains('query param type missing');
+    AppTester::assertThatGet('/permalink?branch=NEVER_EXISTING_BRANCH&product=NEVER_EXISTING_PRODUCT&type=NEVER_EXISTING_TYPE')
+      ->statusCode(404)
+      ->bodyContains('could not find a product with the given query params');
   }
 }
