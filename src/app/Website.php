@@ -10,6 +10,7 @@ use Slim\Psr7\Response;
 use Slim\Views\Twig;
 use DI\ContainerBuilder;
 use app\pages\home\HomeAction;
+use app\permalink\PermalinkAction;
 use Slim\App;
 use Throwable;
 
@@ -46,6 +47,7 @@ class Website
 
   private function installRoutes()
   {
+    $this->app->get('/permalink', PermalinkAction::class);
     $this->app->get('/', HomeAction::class);
   }
 

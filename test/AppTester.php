@@ -67,6 +67,13 @@ class AppTester
     return $this;
   }
 
+  public function headerContains($name, $value): AppTester
+  {
+    $actual = $this->response->getHeader($name)[0];
+    Assert::assertStringContainsString($value, $actual);
+    return $this;
+  }
+
   public function statusCode(int $expectedStatusCode): AppTester
   {
     Assert::assertEquals($expectedStatusCode, $this->response->getStatusCode());

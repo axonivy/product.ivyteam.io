@@ -6,11 +6,6 @@ use Slim\Views\Twig;
 
 class HomeAction
 {
-  const PRODUCT_URLS = [
-    "https://jenkins.ivyteam.io/job/core_product/",
-    "https://jenkins.ivyteam.io/job/core-7_product/"
-  ];
-
   private Twig $view;
 
   public function __construct(Twig $view)
@@ -20,7 +15,7 @@ class HomeAction
 
   public function __invoke($request, $response, $args)
   {
-    $groups = (new Crawler())->get(self::PRODUCT_URLS);
+    $groups = (new Crawler())->get();
     return $this->view->render($response, 'home/home.twig', [
       'groups' => $groups
     ]);
