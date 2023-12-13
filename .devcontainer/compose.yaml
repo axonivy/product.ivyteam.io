@@ -1,0 +1,12 @@
+services:
+  workspace:
+    image: mcr.microsoft.com/devcontainers/php:1-8.2-bullseye
+    volumes:
+      - ../../:/workspaces:cached
+  web:
+    build: ./docker/dev
+   # volumes:
+      #- ../../:/workspaces:cached
+   #   - ../:/var/www/html
+   # ports:
+   #    - 80:80
