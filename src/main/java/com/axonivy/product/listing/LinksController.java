@@ -1,7 +1,5 @@
 package com.axonivy.product.listing;
 
-import java.util.stream.Collectors;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,9 +10,16 @@ class LinksController {
 
   @GetMapping(value = { "links" }, produces = "text/html")
   String all() {
-    var jobs = Crawler.jobs().stream()
-            .map(job -> job.url())
-            .collect(Collectors.joining("<br />"));
-    return jobs;
+    var jobs = Crawler.jobs();
+    var content = "";
+    for (var job : jobs) {
+      content += "<a href=\"";
+      content += job.url();
+      content += "\">";
+      content += job.url();
+      content += "</a>";
+      content += "<br />";
+    }
+    return content;
   }
 }
