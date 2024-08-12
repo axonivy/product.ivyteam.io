@@ -20,6 +20,21 @@ pipeline {
       }
     }
 
+    stage('test') {
+      agent {
+        dockerfile {
+          filename 'Dockerfile.maven'
+        }
+      }
+
+      steps {
+        script {
+          maven cmd: "test"
+        }
+        junit testDataPublishers: [[$class: 'StabilityTestDataPublisher']], testResults: '**/target/surefire-reports/**/*.xml'
+      }
+    }
+
     stage('build') {      
       steps {
         script {
@@ -30,7 +45,9 @@ pipeline {
             }
           }
         }
-      } 
+        recordIssues tools: [eclipse()], qualityGates: [[threshold: 1, type: 'TOTAL']]
+        recordIssues tools: [mavenConsole()]
+      }
     }
   }
 }
