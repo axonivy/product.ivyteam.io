@@ -20,28 +20,14 @@ pipeline {
       }
     }
 
-    stage('test') {
-      agent {
-        dockerfile {
-          dir 'docker/dev'    
-        }
-      }
-      steps {
-        sh 'composer install --no-progress'
-        sh './vendor/bin/phpunit --log-junit phpunit-junit.xml || exit 0'
-        junit 'phpunit-junit.xml'
-      } 
-    }
-
-    stage('deploy') {
-      when {
-        branch 'master' 
-      }
+    stage('build') {      
       steps {
         script {
-          def image = docker.build("engine-listing-service:latest", "-f docker/prod/Dockerfile .")
-          docker.withRegistry('https://docker-registry.ivyteam.io', 'docker-registry.ivyteam.io') {
-            image.push()
+          def image = docker.build("product-listing-service:latest", ".")
+          if (env.BRANCH_NAME == 'master') {
+            docker.withRegistry('https://docker-registry.ivyteam.io', 'docker-registry.ivyteam.io') {            
+              image.push()
+            }
           }
         }
       } 

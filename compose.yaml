@@ -1,7 +1,0 @@
-services:
-  web:
-    build: ./docker/dev
-    volumes:
-      - ./:/var/www/html
-    ports:
-       - 80:80
