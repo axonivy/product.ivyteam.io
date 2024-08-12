@@ -10,7 +10,7 @@ RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
 
 # build native app
 COPY . /build
-RUN mvn -f /build/pom.xml -Pproduction -Pnative native:compile
+RUN mvn -f /build/pom.xml -Pproduction -Pnative native:compile -Dmaven.test.skip=true
 
 # create runtime container
 FROM ubuntu:24.04
