@@ -1,12 +1,7 @@
 package com.axonivy.product.listing;
 
-import java.io.InputStream;
-import java.net.URI;
-import java.util.List;
-
-import com.axonivy.product.listing.crawler.BuildsCrawler;
+import com.axonivy.product.listing.crawler.Crawler;
 import com.axonivy.product.listing.crawler.JobComparator;
-import com.axonivy.product.listing.crawler.JobsCrawler;
 import com.axonivy.product.listing.crawler.JobsCrawler.Job;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -23,8 +18,6 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 @Route("")
 public class HomeView extends AppLayout {
 
-  private static final List<String> URLS = List.of("https://jenkins.ivyteam.io/job/core_product/", "https://jenkins.ivyteam.io/job/core-7_product/");
-
   public HomeView() {
     var toggle = new DrawerToggle();
     var title = new H1("Axon Ivy Product Listing");
@@ -38,10 +31,7 @@ public class HomeView extends AppLayout {
     addToDrawer(scroller);
     addToNavbar(toggle, title);
 
-    var jobs = URLS.parallelStream()
-      .flatMap(uri -> new BuildsCrawler(toInputStream(uri), uri).get().parallelStream())
-      .flatMap(b ->  new JobsCrawler(toInputStream(b.url()), b.url()).get().parallelStream())
-      .sorted(new JobComparator()).toList();
+    var jobs = Crawler.jobs();
 
     var grid = new Grid<Job>();
     grid.setItems(jobs);
@@ -80,15 +70,7 @@ public class HomeView extends AppLayout {
 
   private SideNav getSideNav() {
     var sideNav = new SideNav();
-    sideNav.addItem(new SideNavItem("Downloads", "/", VaadinIcon.DASHBOARD.create()));
+    sideNav.addItem(new SideNavItem("Dashboard", "/dashboard", VaadinIcon.DASHBOARD.create()));
     return sideNav;
-  }
-
-  private InputStream toInputStream(String url) {
-    try {
-      return URI.create(url).toURL().openStream();
-    } catch (Exception ex) {
-      return null;
-    }
   }
 }
