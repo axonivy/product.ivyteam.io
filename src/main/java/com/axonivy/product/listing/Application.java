@@ -20,12 +20,12 @@ import com.vaadin.flow.theme.lumo.Lumo;
 @Theme(value = "my-theme", variant = Lumo.LIGHT)
 public class Application implements AppShellConfigurator {
 
-    @Bean
-    public Clock clock() {
-        return Clock.systemUTC();
-    }
+  @Bean
+  public Clock clock() {
+    return Clock.systemUTC();
+  }
 
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
 }
