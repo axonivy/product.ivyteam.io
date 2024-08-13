@@ -70,7 +70,7 @@ public class HomeView extends AppLayout {
 
   private SideNav getSideNav() {
     var sideNav = new SideNav();
-    sideNav.addItem(new SideNavItem("Dashboard", "/dashboard", VaadinIcon.DASHBOARD.create()));
+    sideNav.addItem(new SideNavItem("Dashboard", "/", VaadinIcon.DASHBOARD.create()));
     return sideNav;
   }
 }
