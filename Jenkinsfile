@@ -35,13 +35,16 @@ pipeline {
       }
     }
 
-    stage('build') {      
+    stage('build') {
       steps {
         script {
-          def image = docker.build("product-listing-service:latest", ".")
-          if (env.BRANCH_NAME == 'master') {
-            docker.withRegistry('https://docker-registry.ivyteam.io', 'docker-registry.ivyteam.io') {            
-              image.push()
+          configFileProvider([configFile(fileId: 'global-maven-settings', variable: 'GLOBAL_MAVEN_SETTINGS')]) {
+            sh "cp $GLOBAL_MAVEN_SETTINGS settings.xml"
+            def image = docker.build("product-listing-service:latest", ".")
+            if (env.BRANCH_NAME == 'master') {
+              docker.withRegistry('https://docker-registry.ivyteam.io', 'docker-registry.ivyteam.io') {            
+                image.push()
+              }
             }
           }
         }
