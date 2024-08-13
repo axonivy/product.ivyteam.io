@@ -14,7 +14,7 @@ COPY settings.xml /settings.xml
 RUN mvn -f /build/pom.xml --batch-mode -Pproduction -Pnative native:compile -Dmaven.test.skip=true -gs /settings.xml
 
 # create runtime container
-FROM ubuntu:24.04
-COPY --from=build /build/target/product-listing-service /
+FROM busybox
+COPY --from=build /build/target/product-listing-service .
 CMD ["/product-listing-service"]
 EXPOSE 8080
