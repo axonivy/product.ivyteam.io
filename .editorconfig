@@ -3,7 +3,7 @@
 # top-most EditorConfig file
 root = true
 
-[*.{php,css,js,twig,json,xml}]
+[*.{css,js,json,xml}]
 end_of_line = lf
 indent_style = space
 indent_size = 2
