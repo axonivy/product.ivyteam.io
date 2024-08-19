@@ -5,16 +5,21 @@ import java.net.URI;
 import java.util.List;
 
 import com.axonivy.product.listing.crawler.JobsCrawler.Job;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
+import com.vaadin.hilla.Endpoint;
 
+@Endpoint
+@AnonymousAllowed
 public class Crawler {
 
-  private static final List<String> URLS = List.of("https://jenkins.ivyteam.io/job/core_product/", "https://jenkins.ivyteam.io/job/core-7_product/");
+  private static final List<String> URLS = List.of("https://jenkins.ivyteam.io/job/core_product/",
+      "https://jenkins.ivyteam.io/job/core-7_product/");
 
   public static List<Job> jobs() {
     return URLS.parallelStream()
-            .flatMap(uri -> new BuildsCrawler(toInputStream(uri), uri).get().parallelStream())
-            .flatMap(b ->  new JobsCrawler(toInputStream(b.url()), b.url()).get().parallelStream())
-            .sorted(new JobComparator()).toList();
+        .flatMap(uri -> new BuildsCrawler(toInputStream(uri), uri).get().parallelStream())
+        .flatMap(b -> new JobsCrawler(toInputStream(b.url()), b.url()).get().parallelStream())
+        .sorted(new JobComparator()).toList();
   }
 
   private static InputStream toInputStream(String url) {
