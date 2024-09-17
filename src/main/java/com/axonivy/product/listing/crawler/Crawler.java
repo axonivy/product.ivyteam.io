@@ -5,11 +5,7 @@ import java.net.URI;
 import java.util.List;
 
 import com.axonivy.product.listing.crawler.JobsCrawler.Job;
-import com.vaadin.flow.server.auth.AnonymousAllowed;
-import com.vaadin.hilla.Endpoint;
 
-@Endpoint
-@AnonymousAllowed
 public class Crawler {
 
   private static final List<String> URLS = List.of("https://jenkins.ivyteam.io/job/core_product/",
