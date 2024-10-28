@@ -16,15 +16,14 @@ class TestBuildsCrawler {
       var crawler = new BuildsCrawler(url, "https://localhost/");
       var builds = crawler.get();
       assertThat(builds)
-      .containsOnly(
+          .containsOnly(
               new Build("https://localhost/job/master/lastSuccessfulBuild/"),
               new Build("https://localhost/job/release%252F10.0/lastSuccessfulBuild/"),
               new Build("https://localhost/job/release%252F11.2/lastSuccessfulBuild/"),
               new Build("https://localhost/job/release%252F11.3/lastSuccessfulBuild/"),
               new Build("https://localhost/job/release%252F8.0/lastSuccessfulBuild/"),
               new Build("https://localhost/job/release%252F9.2/lastSuccessfulBuild/"),
-              new Build("https://localhost/job/release%252F9.4/lastSuccessfulBuild/"),
-              new Build("https://localhost/job/update-yaml-schemas_master-640/lastSuccessfulBuild/"));
+              new Build("https://localhost/job/release%252F9.4/lastSuccessfulBuild/"));
     }
   }
 }
