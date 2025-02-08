@@ -30,7 +30,7 @@ pipeline {
       steps {
         script {
           maven cmd: "test"
-	  if (env.BRANCH_NAME == 'master') {
+          if (env.BRANCH_NAME == 'master') {
             maven cmd: "org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom -DincludeLicenseText=true -DoutputFormat=json"
             uploadBOM(projectName: 'product.ivyteam.io', projectVersion: 'master', bomFile: 'target/bom.json')
           }
