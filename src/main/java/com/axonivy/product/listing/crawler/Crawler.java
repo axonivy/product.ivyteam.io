@@ -8,14 +8,14 @@ import com.axonivy.product.listing.crawler.JobsCrawler.Job;
 
 public class Crawler {
 
-  private static final List<String> URLS = List.of("https://jenkins.ivyteam.io/job/core_product/",
-      "https://jenkins.ivyteam.io/job/core-7_product/");
+  private static final List<String> URLS = List.of("https://jenkins.ivyteam.io/job/core_product/");
 
   public static List<Job> jobs() {
     return URLS.parallelStream()
         .flatMap(uri -> new BuildsCrawler(toInputStream(uri), uri).get().parallelStream())
         .flatMap(b -> new JobsCrawler(toInputStream(b.url()), b.url()).get().parallelStream())
-        .sorted(new JobComparator()).toList();
+        .sorted(new JobComparator())
+        .toList();
   }
 
   private static InputStream toInputStream(String url) {
