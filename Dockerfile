@@ -1,4 +1,4 @@
-FROM container-registry.oracle.com/graalvm/native-image:24.0.2 AS build
+FROM container-registry.oracle.com/graalvm/native-image:24.0.1 AS build
 
 # install maven
 ARG MAVEN_VERSION=3.9.9
