@@ -20,38 +20,24 @@ pipeline {
       }
     }
 
-    stage('test') {
-      agent {
-        dockerfile {
-          filename 'Dockerfile.maven'
-        }
-      }
-
-      steps {
-        script {
-          maven cmd: "test"
-          if (env.BRANCH_NAME == 'master') {
-            maven cmd: "org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom -DincludeLicenseText=true -DoutputFormat=json"
-            uploadBOM(projectName: 'product.ivyteam.io', projectVersion: 'master', bomFile: 'target/bom.json')
-          }
-        }
-        junit testDataPublishers: [[$class: 'StabilityTestDataPublisher']], testResults: '**/target/surefire-reports/**/*.xml'
-      }
-    }
-
     stage('build') {
       steps {
         script {
-          configFileProvider([configFile(fileId: 'global-maven-settings', variable: 'GLOBAL_MAVEN_SETTINGS')]) {
-            sh "cp $GLOBAL_MAVEN_SETTINGS settings.xml"
-            def image = docker.build("product-listing-service:latest", ".")
+          docker.build('maven-build', '-f Dockerfile.maven .').inside {
+            maven cmd: "package -P production"
             if (env.BRANCH_NAME == 'master') {
-              docker.withRegistry('https://docker-registry.ivyteam.io', 'docker-registry.ivyteam.io') {            
-                image.push()
-              }
+              maven cmd: "org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom -DincludeLicenseText=true -DoutputFormat=json"
+              uploadBOM(projectName: 'product.ivyteam.io', projectVersion: 'master', bomFile: 'target/bom.json')
+            }
+          }
+          def image = docker.build("product-listing-service:latest", ".")
+          if (env.BRANCH_NAME == 'master') {
+            docker.withRegistry('https://docker-registry.ivyteam.io', 'docker-registry.ivyteam.io') {            
+              image.push()
             }
           }
         }
+        junit testDataPublishers: [[$class: 'StabilityTestDataPublisher']], testResults: '**/target/surefire-reports/**/*.xml'
         recordIssues tools: [eclipse()], qualityGates: [[threshold: 1, type: 'TOTAL']]
         recordIssues tools: [mavenConsole()]
       }
