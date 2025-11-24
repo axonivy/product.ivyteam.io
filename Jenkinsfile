@@ -14,7 +14,7 @@ pipeline {
       steps {
         script {
           docker.image('mstruebing/editorconfig-checker').inside {
-            sh 'ec -no-color'
+            sh 'ec -no-color -disable-charset'
           }
         }
       }
