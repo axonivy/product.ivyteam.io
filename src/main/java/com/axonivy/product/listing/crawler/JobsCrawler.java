@@ -33,6 +33,10 @@ public class JobsCrawler {
           var job = new LinkToJobConverter(href).toJob();
           jobs.add(job);
         }
+        if (href.contains("vscode-designer") && href.endsWith(".vsix")) {
+          var job = new LinkToJobConverter(href).toJob();
+          jobs.add(job);
+        }
       }
       return jobs;
     } catch (HttpStatusException ex) {
@@ -45,5 +49,6 @@ public class JobsCrawler {
     }
   }
 
-  public record Job(String artifact, String version, String os, String platform, String text, String url) {}
+  public record Job(String artifact, String version, String os, String platform, String text, String url) {
+  }
 }

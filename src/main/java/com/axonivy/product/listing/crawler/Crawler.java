@@ -8,7 +8,8 @@ import com.axonivy.product.listing.crawler.JobsCrawler.Job;
 
 public class Crawler {
 
-  private static final List<String> URLS = List.of("https://jenkins.ivyteam.io/job/core_product/");
+  private static final List<String> URLS = List.of("https://jenkins.ivyteam.io/job/core_product/",
+      "https://jenkins.ivyteam.io/job/vscode-designer/");
 
   public static List<Job> jobs() {
     return URLS.parallelStream()
