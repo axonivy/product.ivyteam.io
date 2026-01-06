@@ -24,7 +24,7 @@ class LinkToJobConverter {
       temp = StringUtils.removeStart(temp, "AxonIvyDesigner");
     } else if (text.startsWith("vscode-designer")) {
       artifact = "vscode-designer";
-      temp = StringUtils.removeStart(temp, "vscode-designer-");
+      temp = StringUtils.substringAfterLast(temp, "-");
     } else {
       artifact = "Engine";
       temp = StringUtils.removeStart(temp, "AxonIvyEngine");
