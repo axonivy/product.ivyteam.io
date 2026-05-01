@@ -1,4 +1,4 @@
-FROM eclipse-temurin:25.0.2_10-jre-noble
+FROM eclipse-temurin:25.0.3_9-jre-noble
 
 ADD target/product-listing-service*.jar /app.jar
 
