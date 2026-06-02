@@ -1,9 +1,9 @@
 package com.axonivy.product.listing.crawler;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import com.axonivy.product.listing.crawler.JobsCrawler.Job;
-import com.vaadin.frontendtools.internal.commons.lang3.Strings;
 
 class LinkToJobConverter {
 
