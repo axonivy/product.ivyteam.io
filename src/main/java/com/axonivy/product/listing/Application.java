@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Bean;
 
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.server.AppShellSettings;
-import com.vaadin.flow.theme.Theme;
-import com.vaadin.flow.theme.lumo.Lumo;
 
 /**
  * The entry point of the Spring Boot application.
@@ -18,7 +16,6 @@ import com.vaadin.flow.theme.lumo.Lumo;
  * and some desktop browsers.
  */
 @SpringBootApplication
-@Theme(value = "my-theme", variant = Lumo.LIGHT)
 public class Application implements AppShellConfigurator {
 
   @Bean

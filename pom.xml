@@ -11,14 +11,14 @@
 
   <properties>
     <java.version>25</java.version>
-    <vaadin.version>24.10.6</vaadin.version>
+    <vaadin.version>25.1.5</vaadin.version>
     <maven.test.failure.ignore>true</maven.test.failure.ignore>
   </properties>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.5.14</version>
+    <version>4.0.6</version>
   </parent>
 
   <repositories>
@@ -53,6 +53,11 @@
       <artifactId>vaadin-spring-boot-starter</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.vaadin</groupId>
+      <artifactId>vaadin-dev</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
       <optional>true</optional>
@@ -62,6 +67,11 @@
       <groupId>org.jsoup</groupId>
       <artifactId>jsoup</artifactId>
       <version>1.22.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.20.0</version>
     </dependency>
 
     <dependency>
@@ -136,3 +146,4 @@
     </profile>
   </profiles>
 </project>
+

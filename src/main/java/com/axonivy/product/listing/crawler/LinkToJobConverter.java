@@ -3,6 +3,7 @@ package com.axonivy.product.listing.crawler;
 import org.apache.commons.lang3.StringUtils;
 
 import com.axonivy.product.listing.crawler.JobsCrawler.Job;
+import com.vaadin.frontendtools.internal.commons.lang3.Strings;
 
 class LinkToJobConverter {
 
@@ -21,13 +22,13 @@ class LinkToJobConverter {
     temp = StringUtils.substringBeforeLast(temp, ".");
     if (text.startsWith("AxonIvyDesigner")) {
       artifact = "Designer";
-      temp = StringUtils.removeStart(temp, "AxonIvyDesigner");
+      temp = Strings.CI.removeStart(temp, "AxonIvyDesigner");
     } else if (text.startsWith("vscode-designer")) {
       artifact = "vscode-designer";
       temp = StringUtils.substringAfterLast(temp, "-");
     } else {
       artifact = "Engine";
-      temp = StringUtils.removeStart(temp, "AxonIvyEngine");
+      temp = Strings.CI.removeStart(temp, "AxonIvyEngine");
     }
 
     var platform = StringUtils.substringAfterLast(temp, "_");
