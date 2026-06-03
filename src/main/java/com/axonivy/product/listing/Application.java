@@ -6,10 +6,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.component.page.ColorScheme;
 import com.vaadin.flow.component.page.ColorScheme.Value;
 import com.vaadin.flow.server.AppShellSettings;
+import com.vaadin.flow.theme.lumo.Lumo;
 
 /**
  * The entry point of the Spring Boot application.
@@ -18,6 +20,7 @@ import com.vaadin.flow.server.AppShellSettings;
  * and some desktop browsers.
  */
 @SpringBootApplication
+@StyleSheet(Lumo.STYLESHEET)
 @ColorScheme(Value.LIGHT)
 public class Application implements AppShellConfigurator {
 
