@@ -13,8 +13,8 @@ pipeline {
     stage('editorconfig') {
       steps {
         script {
-          docker.image('mstruebing/editorconfig-checker').inside {
-            sh 'ec -no-color -disable-charset'
+          docker.build('ec', '-f Dockerfile.editorconfig .').inside {
+            sh 'editorconfig-checker -no-color -disable-charset'
           }
         }
       }
