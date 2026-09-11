@@ -13,7 +13,7 @@ pipeline {
     stage('editorconfig') {
       steps {
         script {
-          docker.build('ec', '-f Dockerfile.editorconfig .').inside {
+          docker.build('editorconfig', '-f Dockerfile.editorconfig .').inside {
             sh 'editorconfig-checker -no-color -disable-charset'
           }
         }
